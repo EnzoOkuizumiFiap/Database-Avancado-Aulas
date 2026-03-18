@@ -1,4 +1,4 @@
-/* set serveroutput on; */            
+/* set serveroutput on; */
 
 declare
     /* 1 - Movimentações de estoque de um determinado produto */

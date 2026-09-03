@@ -1,0 +1,2 @@
+Colocar os valores à Esquerda para destaque e os valores à Direita para não destacar tanto.
+Gráficos de pizza com até 7 sessões.

@@ -1,0 +1,45 @@
+use produtos
+switched to db produtos
+db.createCollection('eletronicos')
+{ ok: 1 }
+db.eletronicos.insertOne({Tipo: 'celular', Marca: 'lg', Valor: '4000', Memoria:'8G', Armazenamento:250, Modelo: 'k10'})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6aabf1663f02dc14063fb889')
+}
+db.eletronicos.insertOne({Tipo: 'celular', Marca: 'Apple', Valor: '7000', Armazenamento:250, versao:15})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6aabf1bc3f02dc14063fb88a')
+}
+db.eletronicos.insertOne({Tipo: 'celular', Marca: 'Samsung', Valor: '5000', Memoria:'15G', Armazenamento:250, Modelo: 'S26 Ultra'})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6aabf1e03f02dc14063fb88b')
+}
+db.eletronicos.insertOne({Tipo: 'celular', Marca: 'Xiaomi', Valor: '4000', Memoria:'10G', Armazenamento:250, Modelo: 'Redmi Note 12'})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6aabf20d3f02dc14063fb88c')
+}
+ 
+db.eletronicos.insertMany([{Tipo: 'Televisão',Marca: 'Samsung', Tamanho:"50'", Valor: 5000, Tela: 'Qled'}                          ,{Tipo:'televisão', Marca: 'lg', Polegadas: 78, Preco: 6000, Frequencia: '100hz'},                         {Categoria: 'computador', Marca: 'Apple', Tamanho: 16, Armazenamento: 520, Ram: 16, Preco: 15000},                          {Tipo: 'computador', Marca: 'LG', Tela: 18, Disco: 250, Memoria: '21gb', Valor: 8000}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6aabf3e93f02dc14063fb88e'),
+    '1': ObjectId('6aabf3e93f02dc14063fb88f'),
+    '2': ObjectId('6aabf3e93f02dc14063fb890'),
+    '3': ObjectId('6aabf3e93f02dc14063fb891')
+  }
+}
+ 
+db.eletronicos.find({Preco:{$gt:5000}})
+{
+  _id: ObjectId('6aabf3e93f02dc14063fb88f'),
+  Tipo: 'televisão',
+  Marca: 'lg',
+  Polegadas: 78,
+  Preco: 6000,
+  Frequencia: '100hz'
+}

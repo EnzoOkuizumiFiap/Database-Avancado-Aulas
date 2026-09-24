@@ -1,0 +1,209 @@
+use loja 
+
+db.createCollection('produtos')
+
+
+db.produtos.insertMany([
+  {
+    nome: "Smartphone Galaxy A55",
+    categoria: "Smartphones",
+    marca: "Samsung",
+    preco: 2299.90,
+    estoque: 35,
+    especificacoes: {
+      tela: "6.6 polegadas",
+      memoriaRAM: "8GB",
+      armazenamento: "256GB",
+      bateria: "5000mAh"
+    }
+  },
+  {
+    nome: "iPhone 15",
+    categoria: "Smartphones",
+    marca: "Apple",
+    preco: 4999.90,
+    estoque: 20,
+    especificacoes: {
+      tela: "6.1 polegadas",
+      memoriaRAM: "6GB",
+      armazenamento: "128GB",
+      bateria: "3349mAh"
+    }
+  },
+  {
+    nome: "Notebook IdeaPad 3",
+    categoria: "Notebooks",
+    marca: "Lenovo",
+    preco: 2899.00,
+    estoque: 15,
+    especificacoes: {
+      processador: "Intel Core i5",
+      memoriaRAM: "8GB",
+      armazenamento: "512GB SSD",
+      tela: "15.6 polegadas"
+    }
+  },
+  {
+    nome: "MacBook Air M3",
+    categoria: "Notebooks",
+    marca: "Apple",
+    preco: 8999.00,
+    estoque: 8,
+    especificacoes: {
+      processador: "Apple M3",
+      memoriaRAM: "8GB",
+      armazenamento: "256GB SSD",
+      tela: "13.6 polegadas"
+    }
+  },
+  {
+    nome: "Smart TV 55 4K",
+    categoria: "Televisores",
+    marca: "LG",
+    preco: 3199.90,
+    estoque: 12,
+    especificacoes: {
+      tamanho: "55 polegadas",
+      resolucao: "4K UHD",
+      tecnologia: "OLED",
+      sistema: "webOS"
+    }
+  },
+  {
+    nome: "PlayStation 5 Slim",
+    categoria: "Videogames",
+    marca: "Sony",
+    preco: 3999.90,
+    estoque: 10,
+    especificacoes: {
+      armazenamento: "1TB SSD",
+      resolucao: "4K",
+      conectividade: "Wi-Fi 6"
+    }
+  },
+  {
+    nome: "Xbox Series X",
+    categoria: "Videogames",
+    marca: "Microsoft",
+    preco: 4299.90,
+    estoque: 7,
+    especificacoes: {
+      armazenamento: "1TB SSD",
+      resolucao: "4K",
+      memoriaRAM: "16GB"
+    }
+  },
+  {
+    nome: "Fone Bluetooth WH-1000XM5",
+    categoria: "Fones de ouvido",
+    marca: "Sony",
+    preco: 2399.00,
+    estoque: 18,
+    especificacoes: {
+      tipo: "Over-ear",
+      cancelamentoRuido: true,
+      conexao: "Bluetooth 5.2",
+      bateria: "30 horas"
+    }
+  },
+  {
+    nome: "Smartwatch Galaxy Watch 6",
+    categoria: "Smartwatches",
+    marca: "Samsung",
+    preco: 1499.90,
+    estoque: 25,
+    especificacoes: {
+      tela: "1.5 polegadas",
+      resistenciaAgua: "5 ATM",
+      conectividade: "Bluetooth",
+      bateria: "40 horas"
+    }
+  },
+  {
+    nome: "Câmera EOS R50",
+    categoria: "Câmeras",
+    marca: "Canon",
+    preco: 4599.00,
+    estoque: 6,
+    especificacoes: {
+      sensor: "APS-C",
+      resolucao: "24.2 MP",
+      video: "4K",
+      conexao: "Wi-Fi e Bluetooth"
+    }
+  }
+]);
+
+
+
+db.produtos.find()
+
+
+db.produtos.find({ categoria: 'Câmeras' })
+
+
+db.produtos.find({ categoria: 'Câmeras' }, {_id:0})
+
+
+db.produtos.find({ categoria: 'Câmeras' }, {_id:0, marca:3, preco:3})
+
+
+db.produtos.find({ preco:{$gt:4599} })
+
+
+db.produtos.find({ preco:{$lt:4599} })
+
+
+// $gt -> Maior 
+// $gte -> Maior Igual
+// $lt -> Menor
+// $lte -> Menor Igual
+// $eq -> Igual
+// $ne -> Diferente
+// $in -> in
+// $nin -> not in
+
+
+db.produtos.find({preco:{$lt:4599}}, {preco:1, _id:0})
+
+db.produtos.find({preco:{$lt:4599}}, {preco:1, _id:0}).sort({ preco: -1 }) 
+// -1 é descrescente e 1 é crescente
+
+
+db.produtos.find({preco:{$lte:4599}}, {preco:1, _id:0}).sort({ preco: -1 }) 
+
+
+db.produtos.find({preco:{$gte:4599}}, {preco:1, _id:0}).sort({ preco: -1 }) 
+
+
+db.produtos.find({preco:{$eq:4599}}) 
+
+
+db.produtos.find({preco:{$ne:4599}}) 
+
+
+db.produtos.find({}, {_id:0, nome:1, categoria:1, preco:1})
+
+// $sum - somar
+// $avg -> média
+// $min -> mínimo
+// $max -> máximo
+// $count -> contar
+
+db.produtos.aggregate([
+			{$match:{categoria:'Televisores'}},
+			{$group:{_id:null, TotalTelevisores: {$sum:"$preco"}}}
+])
+
+
+// EXPLICANDO add collection no mongodb 
+
+use loja
+
+db.createCollection('clientes')
+
+db.createCollection('pedidos')
+
+db.clientes.insertMany(...)
+
+db.pedidos.insertMany(...)

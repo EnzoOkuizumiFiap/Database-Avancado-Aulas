@@ -1,0 +1,122 @@
+
+db.createCollection("livros")
+
+db.livros.insertOne({
+	titulo: "Silo", autor: "Hugh Howey", genero: "sci-fi", ano_publicacao: 2006, paginas: 300, preco: 500, stock: 20, editora: "silvercamp"
+})
+
+db.livros.insertMany([
+ {
+	titulo: "Turma da monica", autor: "Mauricio de Souza", genero: "infantil", ano_publicacao: 1990, paginas: 200, preco: 50, stock: 50, editora: "mauricio editora"
+ },
+ {
+	titulo: "O terror", autor: "Bruno", genero: "romance", ano_publicacao: 1995, paginas: 250, preco: 100, stock: 10, editora: "bruno editora"
+ },
+ {
+	titulo: "O terror 2", autor: "Bruno", genero: "romance", ano_publicacao: 1993, paginas: 250, preco: 100, stock: 10, editora: "bruno editora"
+ }, 
+ {
+	titulo: "O terror 3", autor: "Bruno", genero: "terror", ano_publicacao: 2026, paginas: 300, preco: 150, stock: 10, editora: "bruno editora"
+ },
+ {
+	titulo: "A diversão na praia antes da comédia", autor: "Bruna", genero: "comédia", ano_publicacao: 2024, paginas: 100, preco: 50, stock: 10, editora: "bruna editora"
+ },
+ {
+	titulo: "A diversão na praia", autor: "Bruna", genero: "comédia", ano_publicacao: 2025, paginas: 100, preco: 50, stock: 15, editora: "bruna editora"
+ },
+ {
+	titulo: "A diversão na praia 2", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 150, preco: 150, stock: 20, editora: "bruna editora"
+ },
+ {
+	titulo: "A diversão na praia 3", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 200, preco: 160, stock: 15, editora: "bruna editora"
+ },
+ {
+	titulo: "A diversão na praia 4", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 300, preco: 200, stock: 50, editora: "bruna editora"
+ },
+ {
+	titulo: "Hora da festa na praia", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 250, preco: 100, stock: 20, editora: "bruna editora"
+ },
+ 
+ {
+	titulo: "memes atuais", autor: "Okada", genero: "comédia", ano_publicacao: 2026, paginas: 200, preco: 100, stock: 50, editora: "Okada editora"
+ },
+ {
+	titulo: "O terror na praia", autor: "Bruno", genero: "terror", ano_publicacao: 2024, paginas: 300, preco: 150, stock: 10, editora: "bruno editora"
+ },
+ {
+	titulo: "O terror na praia 2", autor: "Bruno", genero: "terror", ano_publicacao: 2025, paginas: 350, preco: 150, stock: 10, editora: "bruno editora"
+ }, 
+ {
+	titulo: "O terror na praia 3", autor: "Bruno", genero: "terror", ano_publicacao: 2026, paginas: 400, preco: 150, stock: 10, editora: "bruno editora"
+ },
+ {
+	titulo: "A comemoração na praia depois da comédia", autor: "Bruna", genero: "comédia", ano_publicacao: 2024, paginas: 200, preco: 50, stock: 10, editora: "bruna editora"
+ },
+ {
+	titulo: "A comemoração na praia", autor: "Bruna", genero: "comédia", ano_publicacao: 2025, paginas: 100, preco: 50, stock: 15, editora: "bruna editora"
+ },
+ {
+	titulo: "A comemoração na praia 2", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 150, preco: 150, stock: 20, editora: "bruna editora"
+ },
+ {
+	titulo: "A comemoração na praia 3", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 200, preco: 160, stock: 15, editora: "bruna editora"
+ },
+ {
+	titulo: "A comemoração na praia 4", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 300, preco: 200, stock: 50, editora: "bruna editora"
+ },
+ {
+	titulo: "Hora da festa na praia 2", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 250, preco: 100, stock: 0, editora: "bruna editora"
+ },
+ {
+	titulo: "Hora da festa na praia 3", autor: "Bruna", genero: "comédia", ano_publicacao: 2026, paginas: 300, preco: 100, stock: 0, editora: "bruna editora"
+ },
+ 
+])
+
+// ex 1
+db.livros.find({ paginas: { $gt: 300 } })
+
+// ex 2
+db.livros.find({}, { titulo: 1, autor: 1, preco: 1, _id: 0 })
+
+// ex 3
+db.livros.find().sort({ preco: -1 }).limit(5)
+
+// ex 4
+db.livros.find({ titulo: { $regex: "^A", $options: "i" } })
+
+// ex 5
+db.livros.countDocuments({ genero: "romance" })
+
+// ex 6 
+db.livros.updateOne(
+ { titulo: "Hora da festa na praia 3" },
+ { $set: { stock: 50 } }
+)
+
+db.livros.find({ titulo: { $regex: "^Hora da festa na praia 3" } })
+
+// ex 7 
+db.livros.updateMany(
+ { ano_publicacao: { $lt: 2000 } },
+ { $set: { preco: 9.99 } }
+)
+
+db.livros.find({ ano_publicacao: {$lt: 2000 }})
+
+// ex 8
+db.livros.countDocuments()
+
+db.livros.deleteMany({ stock: 0 })
+
+db.livros.countDocuments()
+
+// ex 9
+db.livros.aggregate([
+	{ $group: { _id: null, precoMedia: { $avg: "$preco" } } }
+])
+
+// ex 10
+db.livros.aggregate([
+	{ $group: { _id: "$genero", total: { $sum: "$stock" } } }
+])
